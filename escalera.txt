@@ -1,0 +1,13 @@
+	f32 x, y, z, l;
+	l = inicio;
+	
+	for (u32 i = 0; i < fila; ++i) {
+		for (u32 j = 0; j < columna; ++j) {
+			//if (i == 2 && j == 3)
+				//continue;
+
+			if (c == 'f') {
+				x = t + i;
+				z = inicio + j;
+				y = 1 + i;
+			}
