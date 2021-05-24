@@ -3,8 +3,6 @@
 #ifndef _VBO_
 #define _VBO_
 
-#include <glad/glad.h>
-
 class VBO {
 	GLuint id;
 public:
@@ -12,6 +10,7 @@ public:
 		glGenBuffers(1, &id);
 		Bind();
 		glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		Unbind();
 	}
 	~VBO() { glDeleteBuffers(1, &id); }
 

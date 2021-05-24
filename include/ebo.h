@@ -3,8 +3,6 @@
 #ifndef _EBO_
 #define _EBO_
 
-#include <glad/glad.h>
-
 class EBO {
 	GLuint id;
 public:
@@ -12,6 +10,7 @@ public:
 		glGenBuffers(1, &id);
 		Bind();
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+		Unbind();
 	}
 	~EBO() { glDeleteBuffers(1, &id); }
 
