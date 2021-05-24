@@ -66,7 +66,6 @@ typedef unsigned long long u64;
 #include <camera.h>
 #include <shader.h>
 #include <texture.h>
-#include <mesh.h>     // Unfinished
 
 // **********************
 // *  Global variables  *
