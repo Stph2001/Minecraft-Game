@@ -4,9 +4,9 @@
 ![img](/SampleImages/Test01.PNG)
 
 # Controls 🎮
-* **WASDZX**: Mover
-* **Q**: Acelerar 
-* **C**: Ralentizar
-* **L**: Intercambiar modo Wireframe/Solido
-* **Ruedita del mouse**: Zoom
-* **Mantener click izquierdo y mover el mouse**: Girar la cámara
+* **WASDZX**: Move
+* **Q**: Accelerate 
+* **C**: Slow down
+* **L**: Switch Wireframe/Solid mode
+* **Mouse Wheel**: Zoom
+* **Hold left click and move the mouse**: Rotate the camera
