@@ -3,8 +3,241 @@
 #ifndef _CUBE_BASE_
 #define _CUBE_BASE_
 
+#include <glutil.h>
+
+// Improved base mesh class (UNCOMPLETE)
+// ------ IGNORE THIS FOR NOW... ------
+/*
+static const Vertex verticesSprite[] = {
+	// Face 1
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3( 1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3( 1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Face 2
+	{ glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) }
+};
+static const Vertex verticesHexahedron[] = {
+	// Top
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Bottom
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Front
+	{ glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Back
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Left
+	{ glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Right
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3( 0.5f,  0.5f,  0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) }
+};
+static const Vertex verticesStairs[] = {
+	// Top Top
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.5f) },
+	{ glm::vec3( 0.5f,  0.5f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	// Top Bottom
+	{ glm::vec3( 0.5f,  0.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.0f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.5f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f,  0.0f,  0.5f), glm::vec3( 0.0f,  1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Bottom
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 0.0f, -1.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Front Front
+	{ glm::vec3( 0.5f,  0.0f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.5f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Front Back
+	{ glm::vec3( 0.5f,  0.5f,  0.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f,  0.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.5f) },
+	{ glm::vec3( 0.5f,  0.0f,  0.0f), glm::vec3( 0.0f,  0.0f,  1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	// Back
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 1.0f) },
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3( 0.0f,  0.0f, -1.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	// Left
+	{ glm::vec3(-0.5f,  0.5f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.5f, 1.0f) },
+	{ glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.5f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	{ glm::vec3(-0.5f,  0.0f,  0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.5f, 0.5f) },
+	// Right
+	{ glm::vec3( 0.5f,  0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.5f, 1.0f) },
+	{ glm::vec3( 0.5f,  0.5f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 1.0f) },
+	{ glm::vec3( 0.5f,  0.0f,  0.0f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.0f, 0.0f) },
+	{ glm::vec3( 0.5f,  0.0f,  0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.0f) },
+	{ glm::vec3( 0.5f, -0.5f,  0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(1.0f, 0.5f) },
+	{ glm::vec3( 0.5f, -0.5f, -0.5f), glm::vec3( 1.0f,  0.0f,  0.0f), glm::vec3(1.0f), glm::vec2(0.5f, 0.5f) }
+};
+
+static const u32 indicesSprite[] = {
+	0, 1, 2,   0, 2, 3,  // Face 1
+	4, 5, 6,   4, 6, 7   // Face 2
+};
+static const u32 indicesHexahedron[] = {
+	  0,  1,  2,    0,  2,  3,  // Top
+	  4,  5,  6,    4,  6,  7,  // Bottom
+	  8,  9, 10,    8, 10, 11,  // Front
+	 12, 13, 14,   12, 14, 15,  // Back
+	 16, 17, 18,   16, 18, 19,  // Left
+	 20, 21, 22,   20, 22, 23   // Right
+};
+static const u32 indicesStairs[] = {
+	 0,  1,  2,    0,  2,  3,  // Top Top
+	 4,  5,  6,    4,  6,  7,  // Top Bottom
+	 8,  9, 10,    8, 10, 11,  // Bottom
+	12, 13, 14,   12, 14, 15,  // Front Front
+	16, 17, 18,   16, 18, 19,  // Front Back
+	20, 21, 22,   20, 22, 23,  // Back
+	24, 25, 26,   24, 26, 27,  // Left
+	28, 29, 30,   28, 30, 31   // Right
+};
+
+class BlockMesh {
+	BlockMeshType mesh_type;
+
+	VAO vao;
+
+	Vertex* vertices;
+	u32* indices;
+
+	u32 vrtSize;
+	u32 idxSize;
+public:
+	glm::vec3 position;
+public:
+	BlockMesh(
+		BlockID id,
+		glm::vec3 position,
+		f32 uv_scale,
+		u32 tile = 0) : position(position) {
+
+		switch (id) {
+		case BlockID::DANDELION:
+		case BlockID::POPPY:
+			mesh_type = BlockMeshType::SPRITE;  break;
+		case BlockID::LAVA:
+		case BlockID::WATER:
+			mesh_type = BlockMeshType::FLUID;   break;
+		default:
+			mesh_type = BlockMeshType::DEFAULT; break;
+		}
+
+		switch (mesh_type) {
+		case BlockMeshType::SPRITE:
+			vertices = const_cast<Vertex*>(verticesSprite);
+			indices  = const_cast<u32*>(indicesSprite); break;
+		default:
+			vertices = const_cast<Vertex*>(verticesHexahedron);
+			indices = const_cast<u32*>(indicesHexahedron);
+		}
+
+		vrtSize = sizeof(vertices) / sizeof(Vertex);
+		idxSize = sizeof(indices) / sizeof(u32);
+
+		VBO vbo(sizeof(vertices), vertices);
+		vao.SetVertexAttribPointer(vbo, 0, 3, 11 * FSIZE, 0);
+		vao.SetVertexAttribPointer(vbo, 1, 3, 11 * FSIZE, 3 * FSIZE);
+		vao.SetVertexAttribPointer(vbo, 2, 3, 11 * FSIZE, 6 * FSIZE);
+		vao.SetVertexAttribPointer(vbo, 3, 2, 11 * FSIZE, 9 * FSIZE);
+		
+		vao.Unbind();
+		vbo.Unbind();
+
+		u32 numTiles = 1 / uv_scale;
+		u32 y = tile / numTiles;
+		u32 x = tile - numTiles * y;
+		glm::vec2 tile_pos(x, y);
+
+		// UV coordinates assignation is not yet available for:
+		//    - Slabs
+		//    - Stairs
+		switch (mesh_type) {
+		case BlockMeshType::DEFAULT:
+		case BlockMeshType::FLUID:
+		case BlockMeshType::SLAB:
+			for (u32 i = 0; i < vrtSize / 4; i++) {
+				vertices[4 * i + 0].uvCoords = glm::vec2(uv_scale * (1 + tile_pos.x), 1 - uv_scale *      tile_pos.y);
+				vertices[4 * i + 1].uvCoords = glm::vec2(uv_scale *      tile_pos.x , 1 - uv_scale *      tile_pos.y);
+				vertices[4 * i + 2].uvCoords = glm::vec2(uv_scale *      tile_pos.x , 1 - uv_scale * (1 + tile_pos.y));
+				vertices[4 * i + 3].uvCoords = glm::vec2(uv_scale * (1 + tile_pos.x), 1 - uv_scale * (1 + tile_pos.y));
+			}
+			break;
+		default: break;
+		}
+	}
+	BlockMesh(
+		BlockID id,
+		glm::vec3 position,
+		f32 uv_scale,
+		std::vector<u32> tile_set = {
+			0,  // Top
+			2,  // Bottom
+			1,  // Front
+			1,  // Back
+			1,  // Left
+			1   // Right
+		}) : position(position) {
+
+	}
+	~BlockMesh() { delete[] vertices, indices; }
+
+	glm::mat4 getModel() { return glm::translate(glm::mat4(1.0f), position); }
+
+	void Render(Shader& shader, Texture& texture, Camera camera, f32 aspect_ratio) {
+		vao.Bind();
+		vbo.Bind();
+		ebo.Bind();
+
+		texture.Bind();
+		texture.setUniform2D(shader, "atlas", 0);
+
+		shader.useProgram();
+		shader.setMat4("projection", glm::perspective(camera.getFovAngle(), aspect_ratio, camera.zNear, camera.zFar));
+		shader.setMat4("view", camera.getView());
+		shader.setMat4("model", getModel());
+
+		glDrawElements(GL_TRIANGLES, idxSize, GL_UNSIGNED_INT, 0);
+		
+		texture.Unbind();
+		vao.Unbind();
+		vbo.Unbind();
+		ebo.Unbind();
+	}
+};
+*/
+
+//
 class Cube {
-	glm::vec3 scale;
 	glm::vec3 position;
 
 	f32* vertices;
@@ -16,7 +249,6 @@ class Cube {
 public:
 	Cube(
 		glm::vec3 position = glm::vec3(0.0f),
-		glm::vec3 scale = glm::vec3(1.0f),
 		f32 uv_scale = 0.25f,
 		std::vector<u32> tile_id = {
 			0,  // Top tile
@@ -27,10 +259,9 @@ public:
 			0   // Right tile
 		}
 	) :
-		scale(scale),
 		position(position),
 		vertices(new f32[11 * 24]), indices(new u32[6 * 6]) {
-		glm::vec3 half = scale * 0.5f;
+		glm::vec3 half = glm::vec3(0.5f);
 
 		std::vector<glm::vec2> tiles;
 		for (u32 i = 0; i < 6; i++) {

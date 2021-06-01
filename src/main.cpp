@@ -1,33 +1,21 @@
 // ***************************************************
 // *  Definición de Macros e inclusión de Librerías  *
 // ***************************************************
-#include <glutil.h>
-#include "FastNoiseLite.h"
-#include "mc_blocks.h"
-//#include "chunk.h"
+#include "world.h"
 
 // ***************
 // *  Variables  *
 // ***************
-Camera camera(glm::vec3(5.0f, 40.0f, 5.0f), glm::vec3(-30.0f, 45.0f, 0.0f));
+Camera camera(glm::vec3(-10.0f, 30.0f, 30.0f), glm::vec3(-10.0f, -45.0f, 0.0f));
 
-// Fuente de luz
-glm::vec3 lightPos(1.0f, 40.0f, 1.0f);
-glm::vec3 lightColor(1.0f, 0.9f, 0.8f);
-f32 lightStrenght = 0.4f;
-
-// Entorno
-glm::vec3 envLight(0.1f, 0.2f, 0.3f);
-f32 envStrength = 1.0f;
-
-const u32 SCR_WIDTH2 = 2048;
-const u32 SCR_HEIGHT2 = 1152;
+const u32 SCR_WIDTH2 = 1920;
+const u32 SCR_HEIGHT2 = 1080;
 const u32 WND_WIDTH2 = 1600;
 const u32 WND_HEIGHT2 = 900;
 
-// Otros
-f32 amplitud = 4.0f;
-i32 altura_minima = 32;
+// Fuente de luz
+OmniLight light(glm::vec3(0.0f, 65.0f, 5.0f), glm::vec3(1.0f, 0.9f, 0.8f), 1.0f);
+AmbientLight envLight(glm::vec3(0.32f, 0.95f, 1.00f), 1.0f);
 
 // *********************
 // *  Otras librerías  *
@@ -37,32 +25,19 @@ i32 altura_minima = 32;
 // ***************
 // *  Funciones  *
 // ***************
-std::vector<Block*>* Wall(std::vector<Block*>* bloques, i32 fila, i32 columna, i8 c, f32 t, f32 inicio) {
-	f32 x, y, z;
+// Inserte funciones extra aquí...
 
-	auto temp = bloques;
-
-	for (u32 i = 1; i < fila + 1; i++)
-		for (u32 j = 0; j < columna; j++) {
-			switch (c) {
-			case 'f': z = t; x = inicio + j; break;
-			default:  x = t; z = inicio + j; break;
-			}
-			y = i;
-			glm::vec3 pos = glm::vec3(x, y + altura_minima + (i32)(amplitud / 2) + 1, z);
-			temp->push_back(new Block(BlockID::OAK_PLANKS, pos));
-		}
-
-	return temp;
-}
 
 // **********************
 // * Función principal  *
 // **********************
 int main() {
 	// Inicialización de OpenGL
-	GLFWwindow* window = glutilInit(3, 3, WND_WIDTH2, WND_HEIGHT2, "Minecraft!", SCR_WIDTH2, SCR_HEIGHT2);
-	Shader* shader = new Shader();
+	GLFWwindow* window = glutilInit(3, 3, WND_WIDTH2, WND_HEIGHT2, "Minecraft", SCR_WIDTH2, SCR_HEIGHT2);
+	Shader* shader = new Shader("resources/shaders", "mcshader.vert", "mcshader.frag");
+	Shader* lsShader = new Shader("resources/shaders", "lightsource.vert", "lightsource.frag");
+
+	camera.zFar = 16 * 12;
 
 	// Anclar eventos
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
@@ -71,6 +46,8 @@ int main() {
 
 	// Activar funciones
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -78,40 +55,13 @@ int main() {
 	FastNoiseLite noise;
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
 
+	// Bloque de prueba
+	MCblock* testBlock = new MCblock(BlockID::REDSTONE_BLOCK, light.position);
+	// Chunk de prueba
+	Chunk* testChunk = new Chunk(glm::vec2(0.0f), noise);
+
 	// Creación de la textura base
 	Texture atlas = Texture(0, "resources/textures", "atlas.png", "diffuse", GL_RGBA, GL_NEAREST);
-
-	// Bloque de prueba
-	Block test = Block(BlockID::TEST, glm::vec3(0.0f));
-
-	// Creación del terreno
-	// 1 chunk equivale a 16 bloques
-	u32 l = 32;
-	std::vector<Block*> blocksTerreno;
-	for (u32 x = 0; x < l; x++) {
-		for (u32 z = 0; z < l; z++) {
-			glm::vec3 pos = glm::vec3(x, (i32)(noise.GetNoise((f32)x, (f32)z) * amplitud + altura_minima), z);
-			blocksTerreno.push_back(new Block(BlockID::GRASS, pos));
-
-			if (blocksTerreno[x * l + z]->getPosition().y <= 34) {
-				blocksTerreno[x * l + z]->ChangeBlock(BlockID::SAND);
-			}
-			if (blocksTerreno[x * l + z]->getPosition().y <= 32) {
-				blocksTerreno[x * l + z]->ChangeBlock(BlockID::WATER);
-			}
-			//std::cout << blocksTerreno[x * l + z]->getPosition().y << " ";
-		}
-		//std::cout << std::endl;
-	}
-
-	// Creación de la pared
-	std::vector<Block*> blocksParedes;
-
-	// Parametro Pared
-	std::vector<glm::vec3> positionsPared;
-	blocksParedes = *Wall(&blocksParedes, 5, 4, 'f', 10, 11);
-	blocksParedes = *Wall(&blocksParedes, 5, 6, 'p', 10, 10);
-	blocksParedes = *Wall(&blocksParedes, 5, 6, 'p', 15, 10);
 
 	while (!glfwWindowShouldClose(window)) {
 		f32 currentFrame = (f32)glfwGetTime();
@@ -119,25 +69,29 @@ int main() {
 		lastFrame = currentFrame;
 
 		processInput(window);
-		glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+		glClearColor(envLight.color.r, envLight.color.g, envLight.color.b, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shader->useProgram();
-		shader->setVec3("lightPos", lightPos);
-		shader->setVec3("lightColor", lightColor);
-		shader->setF32("lightStrenght", lightStrenght);
+		shader->setVec3("lightPos", light.position);
+		shader->setVec3("lightColor", light.color);
+		shader->setF32("lightStrenght", light.intensity);
+		shader->setVec3("ambientColor", glm::vec3(1.0f));
+		shader->setF32("ambientStrenght", envLight.intensity);
+		shader->setVec3("cameraPos", camera.position);
 
-		// test.Render(shader, atlas, camera, REL_16_9);
-		for (u32 i = 0; i < blocksTerreno.size(); i++)
-			blocksTerreno[i]->Render(shader, atlas, camera, REL_16_9);
-		for (u32 i = 0; i < blocksParedes.size(); i++)
-			blocksParedes[i]->Render(shader, atlas, camera, REL_16_9);
-
+		testChunk->RenderChunk(shader, atlas, camera, REL_16_9);
+		lsShader->useProgram();
+		lsShader->setVec3("lightColor", light.color);
+		lsShader->setF32("lightIntensity", light.intensity);
+		testBlock->Render(lsShader, atlas, camera, REL_16_9);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 	delete shader;
+	delete testBlock;
+	delete testChunk;
 
 	return 0;
 }

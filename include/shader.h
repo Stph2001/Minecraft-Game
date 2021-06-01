@@ -16,7 +16,7 @@ public:
 		std::string vertexFileName = "shader.vert",
 		std::string fragmentFileName = "shader.frag"
 	) : path(new Path(shadersPath, "resources/textures")) {
-		
+
 		std::ifstream vertexFile(path->shader(vertexFileName));
 		std::string vertexSrc;
 		std::getline(vertexFile, vertexSrc, '\0');
@@ -48,7 +48,7 @@ public:
 
 	void useProgram() { glUseProgram(id); }
 	GLuint getProgram() { return id; }
-	
+
 	// Set uniforms
 	void setI32(const i8* name, const i32& i) const {
 		glUniform1i(glGetUniformLocation(id, name), i);

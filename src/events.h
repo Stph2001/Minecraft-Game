@@ -9,11 +9,11 @@ bool wireframe_mode = false;
 // *  Events  *
 // ************
 void processInput(GLFWwindow* window) {
-	// �Terminar programa?
+	// ¿Terminar programa?
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
-	// Controlar velocidad de la c�mara
+	// Controlar velocidad de la cámara
 	CameraSpeed speedFactor = CameraSpeed::NORMAL;
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
 		speedFactor = CameraSpeed::FAST;
@@ -42,7 +42,7 @@ void processInput(GLFWwindow* window) {
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	// Evitar que el jugador se salga de los l�mites del mundo
+	// Evitar que el jugador se salga de los límites del mundo
 	/*
 	if (camera.position.x >= n - 1)
 		camera.position.x = n - 1;
