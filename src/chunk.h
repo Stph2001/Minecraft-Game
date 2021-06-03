@@ -11,39 +11,39 @@ class Chunk {
 	i32 water_level = 22;
 public:
 	// Constantes del chunk
-	const u32 width  =  16;
-	const u32 lenght =  16;
+	const u32 width = 16;
+	const u32 lenght = 16;
 	const u32 height = 75;  // Max height in Minecraft is 256 blocks
 
 	std::vector<MCblock*> blocks;
-	
+
 	glm::vec3 absolute_position;
 
 	Chunk(glm::vec2 position, FastNoiseLite noise) :
-		absolute_position(glm::vec3(width * position.x, 0.0f, lenght * position.y))
-	
+		absolute_position(glm::vec3(width* position.x, 0.0f, lenght* position.y))
+
 	{
 		// Step 1: Generate all the blocks in a chunk as AIR blocks and turn the ones below the generated noise into STONE
 		// PLUS: Water is generated in this step too!
 		for (u32 y = 0; y < height; y++) for (u32 x = 0; x < width; x++) for (u32 z = 0; z < lenght; z++) {
-				blocks.push_back(new MCblock(BlockID::AIR, absolute_position + glm::vec3(x, y, z)));
-				u32 slot = (y * lenght + x) * width + z;
-				i32 noiseHeight = noise.GetNoise((f32)x, (f32)z) * noise_amplitude + min_height;
+			blocks.push_back(new MCblock(BlockID::AIR, absolute_position + glm::vec3(x, y, z)));
+			u32 slot = (y * lenght + x) * width + z;
+			i32 noiseHeight = noise.GetNoise((f32)(absolute_position.x + x), (f32)(absolute_position.z + z)) * noise_amplitude + min_height;
 
-				auto block = blocks[slot];
+			auto block = blocks[slot];
 
-				// If the block is below the noise map, replace it with STONE
-				if (block->getPosition().y < noiseHeight) block->ChangeBlock(BlockID::STONE);
-				
-				// If the AIR block is below the water level, turn it into WATER
-				if (block->id == BlockID::AIR && block->getPosition().y <= water_level) block->ChangeBlock(BlockID::WATER);
-			}
+			// If the block is below the noise map, replace it with STONE
+			if (block->getPosition().y < noiseHeight) block->ChangeBlock(BlockID::STONE);
+
+			// If the AIR block is below the water level, turn it into WATER
+			if (block->id == BlockID::AIR && block->getPosition().y <= water_level) block->ChangeBlock(BlockID::WATER);
+		}
 		// Step 2: Replace the top layers of the stone with surface blocks like DIRT, GRASS_BLOCK, SAND, and so on...
 		for (u32 y = 0; y < height; y++) {
 			i32 dirt_depth = rand() % 4 + 3;
 
 			for (u32 x = 0; x < width; x++) for (u32 z = 0; z < lenght; z++) {
-				i32 noiseHeight = noise.GetNoise((f32)x, (f32)z) * noise_amplitude + min_height;
+				i32 noiseHeight = noise.GetNoise((f32)(absolute_position.x + x), (f32)(absolute_position.z + z)) * noise_amplitude + min_height;
 
 				u32 slot = (y * lenght + x) * width + z;
 				auto block = blocks[slot];
@@ -104,7 +104,7 @@ public:
 
 				if (rand() % 500 < gold_chance) block->ChangeBlock(BlockID::GOLD_ORE);
 			}
-			// Lapis L�zuli
+			// Lapis Lázuli
 			if (block->id == BlockID::STONE) {
 				u32 lapis_chance = none;
 				if (13 <= block->getPosition().y && block->getPosition().y <= 17) { lapis_chance = absolutely; }

@@ -87,15 +87,15 @@ struct MCblock {
 	MCblock(BlockID id, glm::vec3 position) : id(id) { SetBlock(id, position); }
 	~MCblock() { delete block; }
 
-	// Condición única para renderizar: Que el bloque no sea de aire
+	// Condiciï¿½n ï¿½nica para renderizar: Que el bloque no sea de aire
 	void Render(Shader* shader, Texture& texture, Camera camera, f32 aspect_ratio) {
 		if (id != BlockID::AIR) block->Render(*shader, texture, camera, aspect_ratio);
 	}
 
-	// Esto simulará la acción de romper / colocar bloque
+	// Esto simularï¿½ la acciï¿½n de romper / colocar bloque
 	void ChangeBlock(BlockID new_id) { SetBlock(new_id, block->getPosition()); }
 
-	// Retornar posición del bloque
+	// Retornar posiciï¿½n del bloque
 	glm::vec3 getPosition() { return block->getPosition(); }
 private:
 	void SetBlock(BlockID first_id, glm::vec3 position) {

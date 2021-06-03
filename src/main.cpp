@@ -14,8 +14,8 @@ const u32 WND_WIDTH2 = 1600;
 const u32 WND_HEIGHT2 = 900;
 
 // Fuente de luz
-OmniLight light(glm::vec3(0.0f, 65.0f, 5.0f), glm::vec3(1.0f, 0.9f, 0.8f), 1.0f);
-AmbientLight envLight(glm::vec3(0.32f, 0.95f, 1.00f), 1.0f);
+OmniLight light(glm::vec3(15.0f, 30.0f, 5.0f), glm::vec3(0.89f, 0.89f, 1.0f), 1.0f);
+AmbientLight envLight(glm::vec3(0.00f, 0.00f, 0.12f), 0.2f);
 
 // *********************
 // *  Otras librerías  *
@@ -58,7 +58,10 @@ int main() {
 	// Bloque de prueba
 	MCblock* testBlock = new MCblock(BlockID::REDSTONE_BLOCK, light.position);
 	// Chunk de prueba
-	Chunk* testChunk = new Chunk(glm::vec2(0.0f), noise);
+	Chunk* testChunk1 = new Chunk(glm::vec2(0.0f, 0.0f), noise);
+	Chunk* testChunk2 = new Chunk(glm::vec2(0.0f, 1.0f), noise);
+	Chunk* testChunk3 = new Chunk(glm::vec2(1.0f, 0.0f), noise);
+	Chunk* testChunk4 = new Chunk(glm::vec2(1.0f, 1.0f), noise);
 
 	// Creación de la textura base
 	Texture atlas = Texture(0, "resources/textures", "atlas.png", "diffuse", GL_RGBA, GL_NEAREST);
@@ -80,7 +83,11 @@ int main() {
 		shader->setF32("ambientStrenght", envLight.intensity);
 		shader->setVec3("cameraPos", camera.position);
 
-		testChunk->RenderChunk(shader, atlas, camera, REL_16_9);
+		testChunk1->RenderChunk(shader, atlas, camera, REL_16_9);
+		testChunk2->RenderChunk(shader, atlas, camera, REL_16_9);
+		testChunk3->RenderChunk(shader, atlas, camera, REL_16_9);
+		testChunk4->RenderChunk(shader, atlas, camera, REL_16_9);
+
 		lsShader->useProgram();
 		lsShader->setVec3("lightColor", light.color);
 		lsShader->setF32("lightIntensity", light.intensity);
@@ -91,7 +98,10 @@ int main() {
 	}
 	delete shader;
 	delete testBlock;
-	delete testChunk;
+	delete testChunk1;
+	delete testChunk2;
+	delete testChunk3;
+	delete testChunk4;
 
 	return 0;
 }
