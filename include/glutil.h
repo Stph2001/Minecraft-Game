@@ -39,34 +39,6 @@ typedef unsigned short int u16;
 typedef unsigned int       u32;
 typedef unsigned long long u64;
 
-// ***************
-// *  Libraries  *
-// ***************
-// OpenGL
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <stb_image.h>
-
-// Standard
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <time.h>
-#include <stdlib.h>
-
-// Custom
-#include <path.h>
-#include <vao.h>      // Contains vbo.h
-#include <ebo.h>
-#include <camera.h>
-#include <shader.h>
-#include <texture.h>
-
 // **********************
 // *  Global variables  *
 // **********************
@@ -85,6 +57,26 @@ f32 lastY = WND_HEIGHT / 2.0f;
 
 f32 deltaTime = 0.0f;
 f32 lastFrame = 0.0f;
+
+// ************************
+// *  Official Libraries  *
+// ************************
+// OpenGL
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <stb_image.h>
+
+// Standard
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cmath>
+#include <time.h>
+#include <stdlib.h>
 
 // ***************
 // *  Functions  *
@@ -121,5 +113,21 @@ GLFWwindow* glutilInit(
 
 	return window;
 }
+
+glm::vec2 getScreenResolution() {
+	const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+	return glm::vec2(mode->width, mode->height);
+}
+
+// **********************
+// *  Custom Libraries  *
+// **********************
+#include <path.h>
+#include <vao.h>      // Contains vbo.h
+#include <ebo.h>
+#include <camera.h>
+#include <shader.h>
+#include <texture.h>
 
 #endif

@@ -33,13 +33,15 @@ public:
 		glm::vec3 init_rot = glm::vec3(0.0f, -90.0f, 0.0f),
 		glm::vec3 look_at = glm::vec3(0.0f, 0.0f, -1.0f),
 		glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f),
-		f32 fov_angle = 45.0f
+		f32 fov_angle = 45.0f,
+		f32 aspect_ratio = REL_16_9
 	) :
 		position(init_pos),
 		rotation(init_rot),
 		lookAt(look_at),
 		worldUp(world_up),
-		fov(fov_angle) {
+		fov(fov_angle),
+		aspect_ratio(aspect_ratio) {
 		UpdateVectors();
 	}
 
@@ -105,7 +107,13 @@ public:
 			fov = 45.0f;
 	}
 
+	/*f32 getDynamicAspect() {
+		return;
+	}*/
+
 private:
+	f32 aspect_ratio;
+
 	i32 facMov[3] = { 1, 1, 1 };
 	i32 facRot[3] = { 1, 1, 1 };
 
