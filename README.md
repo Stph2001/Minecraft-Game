@@ -5,7 +5,7 @@
 
 # Controls 🎮
 * **WASDZX**: Move
-* **Q**: Accelerate 
+* <kbd>Q</kbd>: Accelerate 
 * **C**: Slow down
 * **L**: Switch Wireframe/Solid mode
 * **Mouse Wheel**: Zoom
