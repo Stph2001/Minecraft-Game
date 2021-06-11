@@ -144,9 +144,49 @@ public:
 
 	}
 
-	void RenderChunk(Shader* shader, Texture& texture, Camera camera, f32 aspect_ratio) {
-		for (auto block : blocks) {
-			block->Render(shader, texture, camera, aspect_ratio);
+	void RenderChunk(Shader* shader, Texture& texture, Camera camera, f32 aspect_ratio, bool ch_front = true, bool ch_back = true, bool ch_left = true, bool ch_right = true) {
+		for (u32 y = 0; y < height; y++) for (u32 x = 0; x < width; x++) for (u32 z = 0; z < lenght; z++) {
+			bool _top = true, _bottom = true, _front = true, _back = true, _left = true, _right = true;
+			auto block = blocks[(y * lenght + x) * width + z];
+
+			if (x > 0) {
+				auto left = blocks[(y * lenght + (x - 1)) * width + z];
+				if (block->is_fluid) { if (block->id == left->id) _left = false; }
+				else if (block->is_solid == left->is_solid) _left = false;
+			}
+			else if (!ch_left) _left = false;
+			if (x < width - 1) {
+				auto right = blocks[(y * lenght + (x + 1)) * width + z];
+				if (block->is_fluid) { if (block->id == right->id) _right = false; }
+				else if (block->is_solid == right->is_solid) _right = false;
+			}
+			else if (!ch_right) _right = false;
+
+			if (y > 0) {
+				auto bottom = blocks[((y - 1) * lenght + x) * width + z];
+				if (block->is_fluid) { if (block->id == bottom->id) _bottom = false; }
+				else if (block->is_solid == bottom->is_solid) _bottom = false;
+			}
+			if (y < height - 1) {
+				auto top = blocks[((y + 1) * lenght + x) * width + z];
+				if (block->is_fluid) { if (block->id == top->id) _top = false; }
+				else if (block->is_solid == top->is_solid) _top = false;
+			}
+
+			if (z > 0) {
+				auto back = blocks[(y * lenght + x) * width + (z - 1)];
+				if (block->is_fluid) { if (block->id == back->id) _back = false; }
+				else if (block->is_solid == back->is_solid) _back = false;
+			}
+			else if (!ch_back) _back = false;
+			if (z < lenght - 1) {
+				auto front = blocks[(y * lenght + x) * width + (z + 1)];
+				if (block->is_fluid) { if (block->id == front->id) _front = false; }
+				else if (block->is_solid == front->is_solid) _front = false;
+			}
+			else if (!ch_front) _front = false;
+
+			block->Render(shader, texture, camera, aspect_ratio, _top, _bottom, _front, _back, _left, _right);
 		}
 	}
 };

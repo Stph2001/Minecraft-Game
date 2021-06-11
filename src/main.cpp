@@ -2,6 +2,7 @@
 // *  Definición de Macros e inclusión de Librerías  *
 // ***************************************************
 #include "world.h"
+//#include <figures.h>
 
 // ***************
 // *  Variables  *
@@ -21,12 +22,6 @@ AmbientLight envLight(glm::vec3(0.00f, 0.00f, 0.12f), 0.2f);
 // *  Otras librerías  *
 // *********************
 #include "events.h"
-
-// ***************
-// *  Funciones  *
-// ***************
-// Inserte funciones extra aquí...
-
 
 // **********************
 // * Función principal  *
@@ -58,10 +53,11 @@ int main() {
 	// Bloque de prueba
 	MCblock* testBlock = new MCblock(BlockID::REDSTONE_BLOCK, light.position);
 	// Chunk de prueba
-	Chunk* testChunk1 = new Chunk(glm::vec2(0.0f, 0.0f), noise);
-	Chunk* testChunk2 = new Chunk(glm::vec2(0.0f, 1.0f), noise);
-	Chunk* testChunk3 = new Chunk(glm::vec2(1.0f, 0.0f), noise);
-	Chunk* testChunk4 = new Chunk(glm::vec2(1.0f, 1.0f), noise);
+
+	std::vector<Chunk*> chunkSet;
+	for (u32 x = 0; x < 2; x++)
+		for (u32 z = 0; z < 2; z++)
+			chunkSet.push_back(new Chunk(glm::vec2((f32)x, (f32)z), noise));
 
 	// Creación de la textura base
 	Texture atlas = Texture(0, "resources/textures", "atlas.png", "diffuse", GL_RGBA, GL_NEAREST);
@@ -83,10 +79,8 @@ int main() {
 		shader->setF32("ambientStrenght", envLight.intensity);
 		shader->setVec3("cameraPos", camera.position);
 
-		testChunk1->RenderChunk(shader, atlas, camera, REL_16_9);
-		testChunk2->RenderChunk(shader, atlas, camera, REL_16_9);
-		testChunk3->RenderChunk(shader, atlas, camera, REL_16_9);
-		testChunk4->RenderChunk(shader, atlas, camera, REL_16_9);
+		for (u32 i = 0; i < chunkSet.size(); i++)
+			chunkSet[i]->RenderChunk(shader, atlas, camera, REL_16_9);
 
 		lsShader->useProgram();
 		lsShader->setVec3("lightColor", light.color);
@@ -98,10 +92,6 @@ int main() {
 	}
 	delete shader;
 	delete testBlock;
-	delete testChunk1;
-	delete testChunk2;
-	delete testChunk3;
-	delete testChunk4;
 
 	return 0;
 }

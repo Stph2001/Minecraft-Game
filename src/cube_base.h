@@ -169,7 +169,7 @@ public:
 		vao.SetVertexAttribPointer(vbo, 1, 3, 11 * FSIZE, 3 * FSIZE);
 		vao.SetVertexAttribPointer(vbo, 2, 3, 11 * FSIZE, 6 * FSIZE);
 		vao.SetVertexAttribPointer(vbo, 3, 2, 11 * FSIZE, 9 * FSIZE);
-		
+
 		vao.Unbind();
 		vbo.Unbind();
 
@@ -227,7 +227,7 @@ public:
 		shader.setMat4("model", getModel());
 
 		glDrawElements(GL_TRIANGLES, idxSize, GL_UNSIGNED_INT, 0);
-		
+
 		texture.Unbind();
 		vao.Unbind();
 		vbo.Unbind();
@@ -273,34 +273,34 @@ public:
 
 		f32 vTemp[] = {
 			// Top
-			 half.x,  half.y, -half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale * (1 + tiles[0].x), 1 - uv_scale *      tiles[0].y,   //  0
-			-half.x,  half.y, -half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale *      tiles[0].x,  1 - uv_scale *      tiles[0].y,   //  1
-			-half.x,  half.y,  half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale *      tiles[0].x,  1 - uv_scale * (1 + tiles[0].y),  //  2
+			 half.x,  half.y, -half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale * (1 + tiles[0].x), 1 - uv_scale * tiles[0].y,   //  0
+			-half.x,  half.y, -half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale * tiles[0].x,  1 - uv_scale * tiles[0].y,   //  1
+			-half.x,  half.y,  half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale * tiles[0].x,  1 - uv_scale * (1 + tiles[0].y),  //  2
 			 half.x,  half.y,  half.z,   1.0f, 1.0f, 1.0f,    0.0f,  1.0f,  0.0f,   uv_scale * (1 + tiles[0].x), 1 - uv_scale * (1 + tiles[0].y),  //  3
 			// Bottom
-			 half.x, -half.y,  half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale * (1 + tiles[1].x), 1 - uv_scale *      tiles[1].y,   //  4
-			-half.x, -half.y,  half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale *      tiles[1].x,  1 - uv_scale *      tiles[1].y,   //  5
-			-half.x, -half.y, -half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale *      tiles[1].x,  1 - uv_scale * (1 + tiles[1].y),  //  6
+			 half.x, -half.y,  half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale * (1 + tiles[1].x), 1 - uv_scale * tiles[1].y,   //  4
+			-half.x, -half.y,  half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale * tiles[1].x,  1 - uv_scale * tiles[1].y,   //  5
+			-half.x, -half.y, -half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale * tiles[1].x,  1 - uv_scale * (1 + tiles[1].y),  //  6
 			 half.x, -half.y, -half.z,   1.0f, 1.0f, 0.0f,    0.0f, -1.0f,  0.0f,   uv_scale * (1 + tiles[1].x), 1 - uv_scale * (1 + tiles[1].y),  //  7
 			// Front
-			 half.x,  half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale * (1 + tiles[2].x), 1 - uv_scale *      tiles[2].y,   //  8
-			-half.x,  half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale *      tiles[2].x,  1 - uv_scale *      tiles[2].y,   //  9
-			-half.x, -half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale *      tiles[2].x,  1 - uv_scale * (1 + tiles[2].y),  // 10
+			 half.x,  half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale * (1 + tiles[2].x), 1 - uv_scale * tiles[2].y,   //  8
+			-half.x,  half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale * tiles[2].x,  1 - uv_scale * tiles[2].y,   //  9
+			-half.x, -half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale * tiles[2].x,  1 - uv_scale * (1 + tiles[2].y),  // 10
 			 half.x, -half.y,  half.z,   1.0f, 0.0f, 0.0f,    0.0f,  0.0f,  1.0f,   uv_scale * (1 + tiles[2].x), 1 - uv_scale * (1 + tiles[2].y),  // 11
 			// Back
-			-half.x,  half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale * (1 + tiles[3].x), 1 - uv_scale *      tiles[3].y,   // 12
-			 half.x,  half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale *      tiles[3].x,  1 - uv_scale *      tiles[3].y,   // 13
-			 half.x, -half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale *      tiles[3].x,  1 - uv_scale * (1 + tiles[3].y),  // 14
+			-half.x,  half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale * (1 + tiles[3].x), 1 - uv_scale * tiles[3].y,   // 12
+			 half.x,  half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale * tiles[3].x,  1 - uv_scale * tiles[3].y,   // 13
+			 half.x, -half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale * tiles[3].x,  1 - uv_scale * (1 + tiles[3].y),  // 14
 			-half.x, -half.y, -half.z,   1.0f, 0.5f, 0.0f,    0.0f,  0.0f, -1.0f,   uv_scale * (1 + tiles[3].x), 1 - uv_scale * (1 + tiles[3].y),  // 15
 			// Left
-			-half.x,  half.y,  half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[4].x), 1 - uv_scale *      tiles[4].y,   // 16
-			-half.x,  half.y, -half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale *      tiles[4].x,  1 - uv_scale *      tiles[4].y,   // 17
-			-half.x, -half.y, -half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale *      tiles[4].x,  1 - uv_scale * (1 + tiles[4].y),  // 18
+			-half.x,  half.y,  half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[4].x), 1 - uv_scale * tiles[4].y,   // 16
+			-half.x,  half.y, -half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale * tiles[4].x,  1 - uv_scale * tiles[4].y,   // 17
+			-half.x, -half.y, -half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale * tiles[4].x,  1 - uv_scale * (1 + tiles[4].y),  // 18
 			-half.x, -half.y,  half.z,   0.0f, 1.0f, 0.0f,   -1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[4].x), 1 - uv_scale * (1 + tiles[4].y),  // 19
 			// Right
-			 half.x,  half.y, -half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[5].x), 1 - uv_scale *      tiles[5].y,   // 20
-			 half.x,  half.y,  half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale *      tiles[5].x,  1 - uv_scale *      tiles[5].y,   // 21
-			 half.x, -half.y,  half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale *      tiles[5].x,  1 - uv_scale * (1 + tiles[5].y),  // 22
+			 half.x,  half.y, -half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[5].x), 1 - uv_scale * tiles[5].y,   // 20
+			 half.x,  half.y,  half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale * tiles[5].x,  1 - uv_scale * tiles[5].y,   // 21
+			 half.x, -half.y,  half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale * tiles[5].x,  1 - uv_scale * (1 + tiles[5].y),  // 22
 			 half.x, -half.y, -half.z,   0.0f, 0.0f, 1.0f,    1.0f,  0.0f,  0.0f,   uv_scale * (1 + tiles[5].x), 1 - uv_scale * (1 + tiles[5].y),  // 23
 		};
 		u32 iTemp[] = {
@@ -312,7 +312,7 @@ public:
 			20, 21, 22,   20, 22, 23   // Right
 		};
 		vSize = 24 * 11;
-		iSize =  6 *  6;
+		iSize = 6 * 6;
 
 		for (u32 i = 0; i < vSize; i++)
 			vertices[i] = vTemp[i];
@@ -344,14 +344,45 @@ public:
 	glm::mat4 getModel() { return glm::translate(glm::mat4(1.0f), position); }
 
 	glm::vec3 getPosition() { return position; }
-		
-	void Render(Shader& shader, Texture& texture, Camera camera, f32 aspect_ratio) {
-		VBO vbo(vSize * FSIZE, vertices);
-		EBO ebo(iSize * ISIZE, indices);
-		
+
+	void Render(Shader& shader, Texture& texture, Camera camera, f32 aspect_ratio, bool top, bool bottom, bool front, bool back, bool left, bool right) {
+		// Important! Build new arrays for vertices and indices based on the face booleans
+		u32 rendered_faces = 0;
+
+		bool faces[] = { top, bottom, front, back, left, right };
+		for (bool face : faces) if (face) rendered_faces++;
+
+		i32 vTempSize = rendered_faces * 4 * 11;
+		i32 iTempSize = rendered_faces * 1 * 6;
+
+		f32* vTemp = new f32[vTempSize];
+		u32* iTemp = new u32[iTempSize];
+
+		u32 vtx = 0;
+		for (u32 i = 0; i < rendered_faces; i++) {
+			while (true) {
+				if (faces[vtx]) break;
+				vtx++;
+			}
+			for (u32 j = 0; j < 44; j++)
+				vTemp[i * 44 + j] = vertices[vtx * 44 + j];
+			vtx++;
+		}
+
+		for (u32 i = 0; i < rendered_faces * 6; i++)
+			iTemp[i] = indices[i];
+
+		VBO vbo(vTempSize * FSIZE, vTemp);
+		EBO ebo(iTempSize * ISIZE, iTemp);
+
 		vao.Bind();
 		vbo.Bind();
 		ebo.Bind();
+
+		vao.SetVertexAttribPointer(vbo, 0, 3, 11 * FSIZE, 0);
+		vao.SetVertexAttribPointer(vbo, 1, 3, 11 * FSIZE, 3 * FSIZE);
+		vao.SetVertexAttribPointer(vbo, 2, 3, 11 * FSIZE, 6 * FSIZE);
+		vao.SetVertexAttribPointer(vbo, 3, 2, 11 * FSIZE, 9 * FSIZE);
 
 		texture.Bind();
 		texture.setUniform2D(shader, "atlas", 0);
@@ -361,8 +392,8 @@ public:
 		shader.setMat4("view", camera.getView());
 		shader.setMat4("model", getModel());
 
-		glDrawElements(GL_TRIANGLES, iSize, GL_UNSIGNED_INT, 0);
-		
+		glDrawElements(GL_TRIANGLES, iTempSize, GL_UNSIGNED_INT, 0);
+
 		texture.Unbind();
 		vao.Unbind();
 		vbo.Unbind();
