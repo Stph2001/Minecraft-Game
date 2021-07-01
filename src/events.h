@@ -53,6 +53,9 @@ void processInput(GLFWwindow* window) {
 	if (camera.position.z <= 0)
 		camera.position.z = 0;
 	*/
+	if (camera.position.y != 30.0f) {
+		camera.position.y = 30.0f;
+	}
 }
 
 // **********************
